@@ -12,7 +12,7 @@ namespace WordBookmarksAndCheckboxs
     {
         public static WordprocessingDocument OpenDocument()
         {
-            WordprocessingDocument doc = WordprocessingDocument.Open("D:\\Users\\Work\\source\\repos\\WordBookmarksAndCheckboxs\\WordBookmarksAndCheckboxs\\Doc2.docx", true);
+            WordprocessingDocument doc = WordprocessingDocument.Open("C:\\Users\\SDX\\Source\\Repos\\WordBookmarksAndCheckboxs\\WordBookmarksAndCheckboxs\\Doc1.docx", true);
             return doc;
         }
     }

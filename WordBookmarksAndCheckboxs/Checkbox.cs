@@ -9,22 +9,63 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace WordBookmarksAndCheckboxs
 {
-    static class Checkbox
+    public static class Checkbox
     {
-        public static void AddCheckBox()
+        public static List<string> GetTextofCheckbox(WordprocessingDocument doc)
         {
+            List<SdtContentCheckBox> listOfCheckedBoxs = GetListOfCheckedBoxs(doc);
 
+            if (doc == null)
+            {
+                Console.WriteLine($"Cannot find a document");
+            }
+
+            if(listOfCheckedBoxs == null )
+            {
+                Console.WriteLine($"Your document doesn't contians checkboxs");
+            }
+
+            List<string> textOfChecedbox = new List<string>();
+
+            foreach(SdtContentCheckBox cb in listOfCheckedBoxs)
+            {
+                var paragraph = cb.Ancestors<Paragraph>().First();
+                var textContent = paragraph.Descendants<Text>().Skip(1).First().InnerText;
+                textOfChecedbox.Add(textContent);
+            }
+
+            Dictionary<SdtContentCheckBox, string> checkedBoxs = new Dictionary<SdtContentCheckBox, string>();
+
+            return textOfChecedbox;
         }
 
-        public static Dictionary<SdtContentCheckBox, string> CheckboxState(WordprocessingDocument doc, SdtContentCheckBox checkBox)
+        public static List<SdtContentCheckBox> GetListOfCheckedBoxs(WordprocessingDocument doc)
         {
-            Dictionary<SdtContentCheckBox, string> result = new Dictionary<SdtContentCheckBox, string>();
-            return result;
+            if (doc == null)
+            {
+                Console.WriteLine($"Cannot find a document");
+            }
+
+            List<SdtContentCheckBox> listOfCheckedBoxs = new List<SdtContentCheckBox>();
+
+            IEnumerable<SdtContentCheckBox> boxs = doc.MainDocumentPart.Document.Body.Descendants<SdtContentCheckBox>();
+            foreach (SdtContentCheckBox cb in boxs)
+            {
+                if (cb.Checked.Val == "1")
+                {
+                    listOfCheckedBoxs.Add(cb);
+                }
+            }
+            return listOfCheckedBoxs;
         }
 
-        public static void PrintCheckboxStateAndName()
+        public static void PrintCheckboxStateAndName(WordprocessingDocument doc)
         {
-
+            List<string> textOfChecedbox = GetTextofCheckbox(doc);
+            foreach(string text in textOfChecedbox)
+            {
+                Console.WriteLine(text);
+            }
         }
     }
 }

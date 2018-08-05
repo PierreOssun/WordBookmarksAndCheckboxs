@@ -12,7 +12,8 @@ namespace WordBookmarksAndCheckboxs
         static void Main(string[] args)
         {
             WordprocessingDocument doc = WordDocument.OpenDocument();
-            Bookmark.GetBookmarksChildElement(doc);
+            //Bookmark.GetBookmarksChildElement(doc);
+            Checkbox.PrintCheckboxStateAndName(doc);
         }
     }
 }
